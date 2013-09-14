@@ -9,7 +9,11 @@ import java.util.UUID;
  * @author zulak@getpebble.com
  */
 public final class Constants {
-
+	public static final String selfUUIDString = "b100c929-afa1-4bba-b48a-668faf70788a";
+	
+	UUID selfUUID = UUID.fromString(selfUUIDString);
+	
+	
     /**
      * Intent broadcast by pebble.apk when a new connection to a Pebble is established.
      */
