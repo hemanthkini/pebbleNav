@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
@@ -50,34 +52,15 @@ public class MainActivity extends Activity {
 		jsonQuery += "&origin=" + latitude + "," + longitude;
 		jsonQuery += "&destination=" + destAddress;
 		
+		
+		RetreiveFeedTask async = new RetreiveFeedTask(jsonQuery);
+		String jsonString = async.doInBackground(null);
+		
+		//JsonDirectionParser parser = new JsonDirectionParser();
+		
 			
-
-		URL link = null;
-		BufferedReader readURL = null;
-
+		System.out.println("blob >"+jsonString);
 		
-		System.out.println(jsonQuery);
-		
-		link = new URL(jsonQuery);
-		
-		URLConnection connection = link.openConnection();
-		
-		
-		String jsonString = "";
-		String inputLine;
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		
-		while((inputLine = reader.readLine()) != null) {
-			jsonString += inputLine;
-		}
-		
-			reader.close();
-		
-			JsonDirectionParser parser = new JsonDirectionParser();
-			System.out.println(parser.parse(jsonString));
-			
-		//System.out.println(jsonString);
 		 
 	
 	}
