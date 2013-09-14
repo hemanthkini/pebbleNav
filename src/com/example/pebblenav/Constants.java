@@ -11,7 +11,7 @@ import java.util.UUID;
 public final class Constants {
 	public static final String selfUUIDString = "b100c929-afa1-4bba-b48a-668faf70788a";
 	
-	UUID selfUUID = UUID.fromString(selfUUIDString);
+	static UUID selfUUID = UUID.fromString(selfUUIDString);
 	
 	
     /**
