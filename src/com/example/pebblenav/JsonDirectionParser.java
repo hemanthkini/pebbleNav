@@ -1,11 +1,12 @@
 package com.example.pebblenav;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Iterator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 public class JsonDirectionParser {
 	
@@ -21,7 +22,11 @@ public class JsonDirectionParser {
 		ArrayList<Direction> parsedDirections = new ArrayList<Direction>();
 
 		JSONObject jobject = new JSONObject(json);
-		JSONArray steps = jobject.getJSONArray("steps");
+		Iterator iter = jobject.keys();
+		while(iter.hasNext())
+			Log.d("JSON",iter.next().toString());
+		
+		/*JSONArray steps = jobject.getJSONArray("steps");
 		for (int i=0; i < steps.length(); i++)
 		{
 		    try {
@@ -35,9 +40,9 @@ public class JsonDirectionParser {
 		    } catch (JSONException e) {
 		        // Oops
 		    }
-		}
+		}*/
 		
-		return null;
+		return parsedDirections;
 	}
 	
 	
