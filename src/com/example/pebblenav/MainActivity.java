@@ -1,64 +1,86 @@
 package com.example.pebblenav;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.view.Menu;
+import android.view.*;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.location.*;
 import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class MainActivity extends Activity {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+public class MainActivity extends Activity {
+	GPSTracker tracker;
+
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-				
-		try {
-			getLocData();
-		} catch (IOException e) {System.out.println("BAD IO");}
 		
+		tracker = new GPSTracker(getApplicationContext());
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
+				
+		setContentView(R.layout.activity_main);
+	
+
+				
 	}
 	
-	public void getLocData() throws IOException{
+	public void getLocData(View v) throws IOException{
 		
-		//System.out.println("YOLO");
-		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		double longitude = location.getLongitude();
-		double latitude = location.getLatitude();
+		
+		
+		
+		double longitude = tracker.getLongitude();
+		double latitude = tracker.getLatitude();
+		
+		System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
+		
 		
 		EditText textField = (EditText)findViewById(R.id.enterAddress);
-		String destAddress = textField.getText().toString();
+		String destAddress = textField.getText().toString().replaceAll(" ", "%20");
 		
-		String jsonQuery="http://maps.googleapis.com/maps/api/directions/json?mode=walking";
+		String jsonQuery="https://maps.googleapis.com/maps/api/directions/json?mode=walking&sensor=true";
 		jsonQuery += "&origin=" + latitude + "," + longitude;
 		jsonQuery += "&destination=" + destAddress;
 		
-		
+			
+
 		URL link = null;
 		BufferedReader readURL = null;
+
 		
-		try {
-			link = new URL(jsonQuery);
-			readURL = new BufferedReader(new InputStreamReader(link.openStream()));
-		} catch (Exception e) {
-			System.out.println("Cannot load directions");
-		}
+		System.out.println(jsonQuery);
+		
+		link = new URL(jsonQuery);
+		
+		URLConnection connection = link.openConnection();
+		
 		
 		String jsonString = "";
 		String inputLine;
 		
-		 while ((inputLine = readURL.readLine()) != null)
-			 jsonString += inputLine;
-
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		
+		while((inputLine = reader.readLine()) != null) {
+			jsonString += inputLine;
+		}
+		
+			reader.close();
+		
+		System.out.println(jsonString);
 		 
-		  
-		
+	
 	}
 
 	@Override
