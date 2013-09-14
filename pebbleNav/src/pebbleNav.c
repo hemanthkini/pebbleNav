@@ -21,8 +21,6 @@ static struct NavData {
 enum {
   STREET_DATA_KEY = 0,
 };
-TextLayer mainTextLayer;
-
 
 // TODO: Error handling
 static void sync_error_callback(DictionaryResult dict_error, AppMessageResult app_message_error, void *context) {
@@ -46,12 +44,13 @@ void handle_init(AppContextRef ctx) {
   text_layer_set_text(&NavData.mainTextLayer, "waiting for input...");
 
   window_init(&NavData.window, "Window Name");
-  layer_add_child(&NavData.window.layer, &mainTextLayer.layer);
+  layer_add_child(&NavData.window.layer, &NavData.mainTextLayer.layer);
     
   Tuplet initial_values[] = {                                                                                                               
     TupletCString(STREET_DATA_KEY, "waiting for data")                                                                                      
   };    
-  app_sync_init(&NavData.sync, NavData.sync_buffer, sizeof(NavData.sync_buffer), initial_values, ARRAY_LENGTH(initial_values),                             sync_tuple_changed_callback, sync_error_callback, NULL);            
+  app_sync_init(&NavData.sync, NavData.sync_buffer, sizeof(NavData.sync_buffer), initial_values, ARRAY_LENGTH(initial_values), 
+		sync_tuple_changed_callback, sync_error_callback, NULL);            
 
   window_stack_push(&NavData.window, true /* Animated */);
   
