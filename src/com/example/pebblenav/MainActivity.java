@@ -60,6 +60,13 @@ public class MainActivity extends Activity {
 		 
 	
 	}
+	
+	public int coordToFt(double x1, double y1, double x2, double y2){
+		
+		double a2 = Math.pow(x1-x2, 2);
+		double b2 = Math.pow(y1-y2, 2);
+		return (int)Math.sqrt(a2+b2);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
