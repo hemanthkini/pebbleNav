@@ -25,20 +25,16 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		tracker = new GPSTracker(getApplicationContext());
-		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
 				
+		tracker = new GPSTracker(getApplicationContext());
 		setContentView(R.layout.activity_main);
 	
-
 				
 	}
 	
-	public void getLocData(View v) throws IOException{
-		
-		
+	public void getLocData(View v) throws IOException, JSONException{
 		
 		
 		double longitude = tracker.getLongitude();
@@ -78,7 +74,10 @@ public class MainActivity extends Activity {
 		
 			reader.close();
 		
-		System.out.println(jsonString);
+			JsonDirectionParser parser = new JsonDirectionParser();
+			System.out.println(parser.parse(jsonString));
+			
+		//System.out.println(jsonString);
 		 
 	
 	}
