@@ -1,4 +1,5 @@
-package com.getpebble.android.kit;
+package com.example.pebblenav;
+
 
 import java.util.UUID;
 

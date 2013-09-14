@@ -1,13 +1,15 @@
-package com.getpebble.android.kit.util;
+package com.example.pebblenav.util;
 
-import android.util.Base64;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Base64;
 
 /**
  * A collection of key-value pairs of heterogeneous types. PebbleDictionaries are the primary structure used to exchange

@@ -1,5 +1,9 @@
-package com.getpebble.android.kit.util;
+package com.example.pebblenav.util;
 
+
+
+import android.annotation.TargetApi;
+import android.os.Build;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +67,8 @@ final class PebbleTuple {
         return new PebbleTuple(key, type, width, width.value, Long.valueOf(value));
     }
 
-    static PebbleTuple create(
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+	static PebbleTuple create(
             final int key, final TupleType type, final Width width, final Object value) {
 
         int length = Integer.MAX_VALUE;
