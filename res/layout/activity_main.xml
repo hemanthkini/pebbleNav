@@ -8,6 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+
+    
     <EditText
     android:id="@+id/enterAddress"
     android:layout_width="fill_parent"
