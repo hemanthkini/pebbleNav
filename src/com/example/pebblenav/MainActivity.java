@@ -1,21 +1,19 @@
 package com.example.pebblenav;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.view.*;
-import android.view.inputmethod.InputMethodManager;
+import android.view.Menu;
+import android.view.View;
 import android.widget.EditText;
-import android.location.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 	GPSTracker tracker;
@@ -24,7 +22,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		PebbleInterface pebble = new PebbleInterface();
+		pebble.sendDataToPebble(getApplicationContext(), "sup nigga");
 		tracker = new GPSTracker(getApplicationContext());
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
