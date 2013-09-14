@@ -21,15 +21,11 @@ import org.json.JSONObject;
 public class MainActivity extends Activity {
 	GPSTracker tracker;
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
-				
+
 		tracker = new GPSTracker(getApplicationContext());
 		setContentView(R.layout.activity_main);
 	
