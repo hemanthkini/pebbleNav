@@ -32,7 +32,6 @@ public class JsonDirectionParser {
 			if(count>0)
 			{
 				JSONArray steps = legs.getJSONObject(0).getJSONArray("steps");
-				System.out.println(steps);
 				for(int i =0; i<steps.length();i++)
 				{
 					JSONObject s = steps.getJSONObject(i);

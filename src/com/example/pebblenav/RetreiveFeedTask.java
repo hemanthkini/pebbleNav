@@ -13,42 +13,62 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+import org.json.JSONException;
+
 
 public class RetreiveFeedTask extends AsyncTask<String, String, String> {
 
-	String jsonURL;
+	private MainActivity M;
 	
-	RetreiveFeedTask(String jsonUrl){
-		jsonURL = jsonUrl;
+	public RetreiveFeedTask(MainActivity m)
+	{
+		super();
+		this.M=m;
 	}
 	
-
+	
     protected String doInBackground(String... urls) {
         try {
         	
-        	URL link = null;
-    		
-    		link = new URL(jsonURL);
-    		
+
+        	URL link = null;    		
+    		link = new URL(urls[0]);
     		URLConnection connection = link.openConnection();
-    		
     		
     		String jsonString = "";
     		String inputLine;
     		
     		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     		
+    		System.out.println("banana");
+    		
     		while((inputLine = reader.readLine()) != null) {
     			jsonString += inputLine;
     		}
+    		
+    		System.out.println("apple");
     		
     		reader.close();
         	
     		return jsonString;
         	
         } catch (Exception e) {
-            return "IO failed";
+            e.printStackTrace();
+            return "io fail";
         }
+    }
+    
+    protected void onPostExecute(String result){
+    	System.out.println("Post Execute");
+    	JsonDirectionParser parser = new JsonDirectionParser();
+		try {
+			ArrayList<Direction> temp = parser.parse(result);
+			M.parse(temp);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	
     }
 
 

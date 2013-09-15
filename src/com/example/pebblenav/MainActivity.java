@@ -12,14 +12,16 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+
 import org.json.*;
 
 
-public class MainActivity extends Activity implements Runnable{
+public class MainActivity extends Activity  implements Runnable{
 	public static GPSTracker tracker;
 	public static double longitude;
 	public static double latitude;
-	public static final int refreshRate = 10;
+	public static final int refreshRate = 2;
+	public ArrayList<Direction> directions;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +46,24 @@ public class MainActivity extends Activity implements Runnable{
 	}
 	
 	public void recieveNewCoord(double longitude, double latitude){
-		
-		
+		try{
+			System.out.println("a");
+			System.out.println(coordToFt(latitude,longitude,directions.get(0).endlat,directions.get(0).endlong));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public void getLocData(View v) throws IOException, JSONException{
+	public void getLocData(View v) throws IOException, JSONException, InterruptedException, ExecutionException{
 		
 		
 		longitude = tracker.getLongitude();
 		latitude = tracker.getLatitude();
 		
-		System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
+		//System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
 		
 		
 		EditText textField = (EditText)findViewById(R.id.enterAddress);
@@ -65,21 +73,20 @@ public class MainActivity extends Activity implements Runnable{
 		jsonQuery += "&origin=" + latitude + "," + longitude;
 		jsonQuery += "&destination=" + destAddress;
 		
-		
-		RetreiveFeedTask async = new RetreiveFeedTask(jsonQuery);
-		String jsonString = async.doInBackground(null);
-		
-		//JsonDirectionParser parser = new JsonDirectionParser();
+		AsyncTask<String, String, String> task = new RetreiveFeedTask(this).execute(jsonQuery);
 		
 		
-		System.out.println("blob >"+jsonString);
 		
-		 
+	}
 	
+	public void parse(ArrayList<Direction> directions) throws JSONException{
+		this.directions = directions;
+		
+		
 	}
 	
 	public int coordToFt(double x1, double y1, double x2, double y2){
-		
+		System.out.println("b");
 		double a2 = Math.pow(x1-x2, 2);
 		double b2 = Math.pow(y1-y2, 2);
 		int c = (int)Math.sqrt(a2+b2);
@@ -97,9 +104,12 @@ public class MainActivity extends Activity implements Runnable{
 
 	@Override
 	public void run() {
-		
-		recieveNewCoord(tracker.getLongitude(),tracker.getLatitude());
-		
+		System.out.println(directions);
+		if(directions!=null && directions.size()>0)
+		{
+			System.out.println("in");
+			recieveNewCoord(tracker.getLongitude(),tracker.getLatitude());
+		}
 	}
 
 }
