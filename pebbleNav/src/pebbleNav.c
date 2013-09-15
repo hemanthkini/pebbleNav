@@ -105,6 +105,7 @@ void handle_init(AppContextRef ctx) {
   /*  text_layer_init(&NavData.streetTextLayer, GRect(0, 117, 144, 27));
   text_layer_set_font(&NavData.streetTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
   text_layer_set_text(&NavData.streetTextLayer, "street input..."); */
+  text_layer_set_overflow_mode(&NavData.turnTextLayer, GTextOverflowModeWordWrap);
 
   window_init(&NavData.window, "pebbleNav");
   // layer_add_child(&NavData.window.layer, &NavData.streetTextLayer.layer);
