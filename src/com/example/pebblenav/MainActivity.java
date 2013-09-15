@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -55,7 +56,11 @@ public class MainActivity extends Activity  implements Runnable{
 		title.setTypeface(tf);
 		((EditText)(findViewById(R.id.enterAddress))).setOnClickListener(new View.OnClickListener() {
 		  public void onClick(View v) {
+			  if(!(((EditText)v).getText().equals("")))
 		          ((EditText)v).setText(" ");
+			  
+			  InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+			    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		  }
 	});
 		
