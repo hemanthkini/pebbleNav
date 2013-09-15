@@ -16,6 +16,9 @@ public class Direction {
 	public String distancetext;
 	public double distanceval;
 
+	public double durationval;
+	public String durationtext;
+	
 	public double startlat;
 	public double startlong;
 	public double endlat;
@@ -28,6 +31,9 @@ public class Direction {
 			distanceval = s.getJSONObject("distance").getDouble("value");
 			distancetext = s.getJSONObject("distance").getString("text");
 
+			durationtext = s.getJSONObject("duration").getString("text");
+			durationval = s.getJSONObject("duration").getDouble("value");
+			
 			String man="";
 			try{
 				man = s.getString("maneuver");
