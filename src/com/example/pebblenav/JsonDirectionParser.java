@@ -29,7 +29,7 @@ public class JsonDirectionParser {
 			JSONObject route = routes.getJSONObject(0);
 			JSONArray legs = route.getJSONArray("legs");
 			int count = legs.length();
-			if(count==1)
+			if(count>0)
 			{
 				JSONArray steps = legs.getJSONObject(0).getJSONArray("steps");
 				System.out.println(steps);
