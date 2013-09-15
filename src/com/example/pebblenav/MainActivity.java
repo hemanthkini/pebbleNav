@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -60,12 +62,25 @@ public class MainActivity extends Activity  implements Runnable{
 		EditText edit = (EditText)findViewById(R.id.enterAddress);
 		edit.setTypeface(tf);
 		title.setTypeface(tf);
+		
 		((EditText)(findViewById(R.id.enterAddress))).setOnClickListener(new View.OnClickListener() {
 		  public void onClick(View v) {
+			  if(!(((EditText)v).getText().equals("")))
 		          ((EditText)v).setText(" ");
+			  
+			  
 		  }
 	});
 		
+		Button gobutton = ((Button)findViewById(R.id.go));
+		gobutton.setOnClickListener(new View.OnClickListener() {
+		  public void onClick(View v) {
+			  
+			  InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+			    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+			  
+			  
+		  }});
 
 	}
 
@@ -118,8 +133,6 @@ public class MainActivity extends Activity  implements Runnable{
 		longitude = tracker.getLongitude();
 		latitude = tracker.getLatitude();
 
-		//System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
-
 
 		EditText textField = (EditText)findViewById(R.id.enterAddress);
 		String destAddress = textField.getText().toString().replaceAll(" ", "%20");
@@ -131,12 +144,10 @@ public class MainActivity extends Activity  implements Runnable{
 		new RetreiveFeedTask(this).execute(jsonQuery);
 
 
-
 	}
 
 	public void parse(ArrayList<Direction> directions) throws JSONException{
 		this.directions = directions;
-
 
 	}
 
@@ -195,8 +206,6 @@ public class MainActivity extends Activity  implements Runnable{
 
 			});
 			System.out.println("D:"+directions.get(0));
-
-
 
 			System.out.println("in");
 			Location L = tracker.getLocation();
