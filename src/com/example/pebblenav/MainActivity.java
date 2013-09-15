@@ -10,8 +10,8 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +44,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 		setContentView(R.layout.activity_main);
 
-		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
 		//PebbleInterface.buzzPebble(getApplicationContext());
 		//PebbleInterface.buzzPebble(getApplicationContext());
 		//PebbleInterface.buzzPebble(getApplicationContext());
@@ -155,6 +155,10 @@ public class MainActivity extends Activity  implements Runnable{
 						displaytext = directions.get(0).toString();
 					}
 					displayDir.setText(directions.get(0).toString());
+					Log.d("displaytext", displaytext);
+					displaytext = displaytext.substring(0,12);
+					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, 0);
+					
 				}
 
 			});
