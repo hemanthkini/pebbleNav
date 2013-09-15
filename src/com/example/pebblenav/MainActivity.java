@@ -82,7 +82,8 @@ public class MainActivity extends Activity  implements Runnable{
 				directions.remove(0);
 				if(directions.size()==0)
 				{
-					throw new Exception("Destroy Universe"); 
+					directions = null;
+					return;
 				}
 			}
 		}
@@ -162,20 +163,6 @@ public class MainActivity extends Activity  implements Runnable{
       private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
       }
-	
-	public double coordToFt(double x1, double y1, double x2, double y2){
-		System.out.println("myloc("+x1+","+y1+")");
-		System.out.println("destloc("+x2+","+y2+")");
-
-		double a2 = Math.pow(x1-x2, 2);
-		System.out.println(a2);
-		double b2 = Math.pow(y1-y2, 2);
-		System.out.println(b2);
-		double c = Math.sqrt(a2+b2);
-		System.out.println(c);
-		//364320 is number of feet in a unit of longitude/latitude
-		return 364320 * c;
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,8 +201,15 @@ public class MainActivity extends Activity  implements Runnable{
 					}
 					displayDir.setText(directions.get(0).toString());
 					Log.d("displaytext", displaytext);
-				//	displaytext = displaytext.substring(0,15);
-					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, 0);
+
+					displaytext = displaytext.substring(0,15);
+					int turn =3;
+					if(displaytext.contains("left"))
+						turn = 1;
+					else if(displaytext.contains("right"))
+						turn = 2;
+					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
+
 					
 				}
 

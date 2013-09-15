@@ -1,19 +1,14 @@
 package com.example.pebblenav;
 
-import android.os.*;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.view.*;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.location.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 
 import org.json.JSONException;
+
+import android.os.AsyncTask;
 
 
 public class RetreiveFeedTask extends AsyncTask<String, String, String> {
