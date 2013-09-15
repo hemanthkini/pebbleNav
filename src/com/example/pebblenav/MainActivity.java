@@ -182,8 +182,6 @@ public class MainActivity extends Activity  implements Runnable{
 			});
 			System.out.println("D:"+directions.get(0));
 
-
-
 			System.out.println("in");
 			tracker.getLocation();
 			recieveNewCoord(tracker.getLatitude(),tracker.getLongitude());
