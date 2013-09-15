@@ -33,30 +33,18 @@ public class MainActivity extends Activity  implements Runnable{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
-
-
 		setup();
 
 	}
 
 	public void setup(){
-
-
-
-		//Log.d("dist",distance(40.446833,-79.955964,40.447176,-79.957423,'K')*1000+"");
-
+		
 		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
 		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
 
 		tracker = new GPSTracker(getApplicationContext());
 
 		setContentView(R.layout.activity_main);
-
-		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
-		//PebbleInterface.buzzPebble(getApplicationContext());
-		//PebbleInterface.buzzPebble(getApplicationContext());
-		//PebbleInterface.buzzPebble(getApplicationContext());
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 		TextView title = (TextView)findViewById(R.id.title);
@@ -146,7 +134,7 @@ public class MainActivity extends Activity  implements Runnable{
 					vec2 B = new vec2(theDir.endlat,theDir.endlong);
 					vec2 C = new vec2(tracker.getLatitude(), tracker.getLongitude());
 
-					double minDist = DistanceUtils.minimum_distance(A,B,C);
+					int minDist = (int)DistanceUtils.minimum_distance(A,B,C);
 
 					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
 
