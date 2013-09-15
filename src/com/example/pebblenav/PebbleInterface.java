@@ -2,6 +2,7 @@ package com.example.pebblenav;
 
 import android.content.Context;
 
+import com.example.pebblenav.util.Constants;
 import com.example.pebblenav.util.PebbleDictionary;
 
 public class PebbleInterface {

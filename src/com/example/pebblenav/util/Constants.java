@@ -1,4 +1,4 @@
-package com.example.pebblenav;
+package com.example.pebblenav.util;
 
 
 import java.util.UUID;
@@ -11,7 +11,7 @@ import java.util.UUID;
 public final class Constants {
 	public static final String selfUUIDString = "b100c929-afa1-4bba-b48a-668faf70788a";
 	
-	static UUID selfUUID = UUID.fromString(selfUUIDString);
+	public static UUID selfUUID = UUID.fromString(selfUUIDString);
 	
 	public final static int LEFT_TURN_IMG_KEY = 1;
 	public final static int RIGHT_TURN_IMG_KEY = 2;

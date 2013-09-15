@@ -18,9 +18,9 @@ import android.os.Build;
 import android.util.Log;
 
 
-import com.example.pebblenav.Constants;
-import com.example.pebblenav.Constants.PebbleAppType;
+import com.example.pebblenav.util.Constants;
 import com.example.pebblenav.util.PebbleDictionary;
+import com.example.pebblenav.util.Constants.PebbleAppType;
 
 /**
  * A helper class providing methods for interacting with third-party Pebble Smartwatch applications. Pebble-enabled

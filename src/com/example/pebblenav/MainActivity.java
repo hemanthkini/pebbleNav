@@ -162,6 +162,9 @@ public class MainActivity extends Activity  implements Runnable{
 						turn = 1;
 					else if(displaytext.contains("right"))
 						turn = 2;
+					
+					PebbleInterface.sendTurnImageToPebble(getApplicationContext(),turn);
+					
 					if(displaytext.length()>40)
 						displaytext=displaytext.substring(0,40);
 					final int linelength = 15;
