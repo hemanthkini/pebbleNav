@@ -172,21 +172,20 @@ public class MainActivity extends Activity  implements Runnable{
 						displaytext=displaytext.substring(0,40);
 					final int linelength = 15;
 					
-					while(displaytext.length()>linelength-1)
-					{
 						String textpiece = displaytext.substring(0,linelength-1);
 						displaytext = displaytext.substring(linelength-1);
-						
-						PebbleInterface.sendTurnToPebble(getApplicationContext(), textpiece+(textpiece.charAt(linelength-1)==' '?"-":" "), turn);
+					
+					if(displaytext.length()>14)
+					{	
+						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext.substring(0,14)+(textpiece.charAt(linelength-1)==' '?"-":" "), turn);
+						displaytext=displaytext.substring(14);
+						if(displaytext.length()>14)
+							PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext.substring(14,29), turn);
+						else
+							PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
 					}
-					if(displaytext.length()>0)
+					else
 						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
-
-					//PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
-
-					
-					
-
 
 				}
 
