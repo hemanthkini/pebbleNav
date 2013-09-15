@@ -6,11 +6,39 @@ import com.example.pebblenav.util.PebbleDictionary;
 
 public class PebbleInterface {
 
+	private final static int TURN_DATA_KEY = 0;
 	private final static int STREET_DATA_KEY = 1;
+	private final static int TURN_IMAGE_KEY = 2;
+	private final static int VIBES_KEY = 3;
+
+	private static String TurnDataString;
+	private static String StreetDataString;
+	private static int TurnImageID;
 	
-	public void sendDataToPebble (Context c, String stringVal) {
+	public static void sendDataToPebble (Context c, String stringVal, String stringVal2, int intVal, int buzz) {
 		PebbleDictionary data = new PebbleDictionary();
+		data.addString(TURN_DATA_KEY, stringVal2);
+		TurnDataString = stringVal2;
 		data.addString(STREET_DATA_KEY, stringVal);
+		StreetDataString = stringVal;
+		data.addInt32(TURN_IMAGE_KEY, intVal);
+		TurnImageID = intVal;
+		data.addInt32(VIBES_KEY, buzz);
+		PebbleKit.sendDataToPebble(c, Constants.selfUUID, data);
+	}
+	
+	public static void sendTurnToPebble(Context c, String stringVal, int intVal) {
+		sendDataToPebble(c, StreetDataString, stringVal, intVal, 0);		
+	}
+	
+	public static void sendStreetToPebble(Context c, String stringVal) {
+		sendDataToPebble(c, stringVal, TurnDataString, TurnImageID, 0);
+	}
+	
+	public static void buzzPebble (Context c)
+	{
+		PebbleDictionary data = new PebbleDictionary();
+		data.addInt32(VIBES_KEY, 1);
 		PebbleKit.sendDataToPebble(c, Constants.selfUUID, data);
 	}
 

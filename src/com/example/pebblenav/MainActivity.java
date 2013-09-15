@@ -8,29 +8,44 @@ import java.net.URLConnection;
 
 import org.json.JSONException;
 
+import android.os.*;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.view.Menu;
-import android.view.View;
-import android.widget.EditText;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.view.*;
+import android.widget.*;
+import android.location.*;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
+import org.json.*;
 
-public class MainActivity extends Activity {
-	GPSTracker tracker;
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+public class MainActivity extends Activity implements Runnable{
+	public static GPSTracker tracker;
+	public static double longitude;
+	public static double latitude;
+	public static final int refreshRate = 10;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
 		tracker = new GPSTracker(getApplicationContext());
 		
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
+		setup();
 				
+	}
+	
+	public void setup(){
+		
+		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
+		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
+
 		tracker = new GPSTracker(getApplicationContext());
+		
 		setContentView(R.layout.activity_main);
 
 		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
@@ -38,13 +53,23 @@ public class MainActivity extends Activity {
 		PebbleInterface.buzzPebble(getApplicationContext());
 		PebbleInterface.buzzPebble(getApplicationContext());
 				
+		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
+		TextView title = (TextView)findViewById(R.id.title);
+		title.setTypeface(tf);
+		
+	}
+	
+	public void recieveNewCoord(double longitude, double latitude){
+		
+		
+		
 	}
 	
 	public void getLocData(View v) throws IOException, JSONException{
 		
 		
-		double longitude = tracker.getLongitude();
-		double latitude = tracker.getLatitude();
+		longitude = tracker.getLongitude();
+		latitude = tracker.getLatitude();
 		
 		System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
 		
@@ -56,36 +81,27 @@ public class MainActivity extends Activity {
 		jsonQuery += "&origin=" + latitude + "," + longitude;
 		jsonQuery += "&destination=" + destAddress;
 		
-			
-
-		URL link = null;
-		BufferedReader readURL = null;
-
 		
-		System.out.println(jsonQuery);
+		RetreiveFeedTask async = new RetreiveFeedTask(jsonQuery);
+		String jsonString = async.doInBackground(null);
 		
-		link = new URL(jsonQuery);
-		
-		URLConnection connection = link.openConnection();
+		//JsonDirectionParser parser = new JsonDirectionParser();
 		
 		
-		String jsonString = "";
-		String inputLine;
+		System.out.println("blob >"+jsonString);
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		
-		while((inputLine = reader.readLine()) != null) {
-			jsonString += inputLine;
-		}
-		
-			reader.close();
-		
-			JsonDirectionParser parser = new JsonDirectionParser();
-			System.out.println(parser.parse(jsonString));
-			
-		//System.out.println(jsonString);
 		 
 	
+	}
+	
+	public int coordToFt(double x1, double y1, double x2, double y2){
+		
+		double a2 = Math.pow(x1-x2, 2);
+		double b2 = Math.pow(y1-y2, 2);
+		int c = (int)Math.sqrt(a2+b2);
+		
+		//364320 is number of feet in a unit of longitude/latitude
+		return 364320 * c;
 	}
 
 	@Override
@@ -93,6 +109,13 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void run() {
+		
+		recieveNewCoord(tracker.getLongitude(),tracker.getLatitude());
+		
 	}
 
 }

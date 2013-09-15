@@ -12,14 +12,20 @@ PBL_APP_INFO(MY_UUID,
 
 static struct NavData {
   Window window;
-  TextLayer mainTextLayer;
+  TextLayer streetTextLayer;
+  TextLayer turnTextLayer;
 
   AppSync sync;
-  uint8_t sync_buffer[32];
+  uint8_t sync_buffer[64];
 } NavData;
 
+char debugLog[10];
+
 enum {
-  STREET_DATA_KEY = 0,
+  TURN_DATA_KEY = 0,
+  STREET_DATA_KEY = 1, 
+  TURN_IMAGE_KEY = 2,
+  VIBE_KEY = 3
 };
 
 // TODO: Error handling
@@ -29,8 +35,29 @@ static void sync_error_callback(DictionaryResult dict_error, AppMessageResult ap
 static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tuple, const Tuple* old_tuple, void* context) {
 
   switch (key) {
+  case TURN_DATA_KEY:
+    text_layer_set_text(&NavData.turnTextLayer, new_tuple->value->cstring);
+    break;
   case STREET_DATA_KEY:
-    text_layer_set_text(&NavData.mainTextLayer, new_tuple->value->cstring);
+    text_layer_set_text(&NavData.streetTextLayer, new_tuple->value->cstring);
+    break;
+  case TURN_IMAGE_KEY:
+    break;
+  case VIBE_KEY:
+    snprintf(debugLog, 10, "%lu", new_tuple->value->uint32);
+    text_layer_set_text(&NavData.streetTextLayer, debugLog);
+    if (new_tuple->value->uint32 == 1)
+      {
+	vibes_short_pulse();
+      }
+    else if (new_tuple->value->uint32 == 2)
+      {
+	vibes_double_pulse();
+      }
+    else if (new_tuple->value->uint32 == 3)
+      {
+	vibes_long_pulse();
+      }
     break;
   default:
     return;
@@ -39,15 +66,21 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
 
 void handle_init(AppContextRef ctx) {
 
-  text_layer_init(&NavData.mainTextLayer, GRect(0, 100, 144, 68));
-  text_layer_set_font(&NavData.mainTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
-  text_layer_set_text(&NavData.mainTextLayer, "waiting for input...");
+  text_layer_init(&NavData.turnTextLayer, GRect(0, 90, 144, 27));
+  text_layer_set_font(&NavData.turnTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
+  text_layer_set_text(&NavData.turnTextLayer, "nav input...");
 
-  window_init(&NavData.window, "Window Name");
-  layer_add_child(&NavData.window.layer, &NavData.mainTextLayer.layer);
-    
+  text_layer_init(&NavData.streetTextLayer, GRect(0, 117, 144, 27));
+  text_layer_set_font(&NavData.streetTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
+  text_layer_set_text(&NavData.streetTextLayer, "street input...");
+
+  window_init(&NavData.window, "pebbleNav");
+  layer_add_child(&NavData.window.layer, &NavData.streetTextLayer.layer);
+  layer_add_child(&NavData.window.layer, &NavData.turnTextLayer.layer);
+
   Tuplet initial_values[] = {                                                                                                               
-    TupletCString(STREET_DATA_KEY, "waiting for data")                                                                                      
+    TupletCString(STREET_DATA_KEY, "waiting for data"),
+    TupletCString(TURN_DATA_KEY, "nav input...")
   };    
   app_sync_init(&NavData.sync, NavData.sync_buffer, sizeof(NavData.sync_buffer), initial_values, ARRAY_LENGTH(initial_values), 
 		sync_tuple_changed_callback, sync_error_callback, NULL);            
