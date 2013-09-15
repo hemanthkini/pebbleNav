@@ -23,6 +23,8 @@ public class MainActivity extends Activity  implements Runnable{
 	public static double longitude;
 	public static double latitude;
 	public static final int refreshRate = 5;
+	public static final int NEXTDIRECTIONLIMIT = 25;
+
 	public ArrayList<Direction> directions;
 
 	@Override
@@ -37,6 +39,10 @@ public class MainActivity extends Activity  implements Runnable{
 
 	public void setup(){
 
+
+		
+		//Log.d("dist",distance(40.446833,-79.955964,40.447176,-79.957423,'K')*1000+"");
+		
 		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
 		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
 
@@ -44,7 +50,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 		setContentView(R.layout.activity_main);
 
-		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
 		//PebbleInterface.buzzPebble(getApplicationContext());
 		//PebbleInterface.buzzPebble(getApplicationContext());
 		//PebbleInterface.buzzPebble(getApplicationContext());
@@ -58,7 +64,7 @@ public class MainActivity extends Activity  implements Runnable{
 	public void recieveNewCoord(double latitude, double longitude){
 		try{
 			System.out.println("a");
-			final double dist = coordToFt(latitude,longitude,directions.get(0).endlat,directions.get(0).endlong);
+			final double dist = distance(latitude,longitude,directions.get(0).endlat,directions.get(0).endlong,'K')*1000;
 
 			runOnUiThread(new Runnable(){
 
@@ -71,7 +77,7 @@ public class MainActivity extends Activity  implements Runnable{
 			});
 
 			System.out.println("Distance:"+dist);
-			if(dist<25)
+			if(dist<NEXTDIRECTIONLIMIT)
 			{
 				directions.remove(0);
 				if(directions.size()==0)
@@ -115,6 +121,48 @@ public class MainActivity extends Activity  implements Runnable{
 
 	}
 
+	private double minimum_distance(vec2 v, vec2 w, vec2 p) {
+		  // Return minimum distance between line segment vw and point p
+		  double l2 = w.sub(v).mag2();  // i.e. |w-v|^2 -  avoid a sqrt
+		  if (l2 == 0.0) return v.sub(p).magnitude();   // v == w case
+		  // Consider the line extending the segment, parameterized as v + t (w - v).
+		  // We find projection of point p onto the line. 
+		  // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+		  double t = p.sub(v).dot(w.sub(v)) / l2;
+		  if (t < 0.0) return v.sub(p).magnitude();     // Beyond the 'v' end of the segment
+		  else if (t > 1.0) return w.sub(p).magnitude(); // Beyond the 'w' end of the segment
+		  vec2 projection = v.add((w.sub(v)).scale(t));  // Projection falls on the segment
+		  return projection.sub(p).magnitude();
+		}
+	
+    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+          dist = dist * 1.609344;
+        } else if (unit == 'N') {
+          dist = dist * 0.8684;
+          }
+        return (dist);
+      }
+
+      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+      /*::  This function converts decimal degrees to radians             :*/
+      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+      private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+      }
+
+      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+      /*::  This function converts radians to decimal degrees             :*/
+      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+      private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+      }
+	
 	public double coordToFt(double x1, double y1, double x2, double y2){
 		System.out.println("myloc("+x1+","+y1+")");
 		System.out.println("destloc("+x2+","+y2+")");
