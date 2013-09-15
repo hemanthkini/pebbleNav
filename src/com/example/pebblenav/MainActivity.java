@@ -100,8 +100,6 @@ public class MainActivity extends Activity  implements Runnable{
 		longitude = tracker.getLongitude();
 		latitude = tracker.getLatitude();
 
-		//System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
-
 
 		EditText textField = (EditText)findViewById(R.id.enterAddress);
 		String destAddress = textField.getText().toString().replaceAll(" ", "%20");
@@ -113,12 +111,10 @@ public class MainActivity extends Activity  implements Runnable{
 		new RetreiveFeedTask(this).execute(jsonQuery);
 
 
-
 	}
 
 	public void parse(ArrayList<Direction> directions) throws JSONException{
 		this.directions = directions;
-
 
 	}
 
