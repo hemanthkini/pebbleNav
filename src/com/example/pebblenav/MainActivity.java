@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 
 import com.example.pebblenav.util.DistanceUtils;
+import com.example.pebblenav.util.vec2;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -167,8 +168,9 @@ public class MainActivity extends Activity  implements Runnable{
 						turn = 1;
 					else if(displaytext.contains("right"))
 						turn = 2;
-					
-					final int linelength = 15;
+					if(displaytext.length()>40)
+						displaytext=displaytext.substring(0,40);
+/*					final int linelength = 15;
 					
 					while(displaytext.length()>linelength-1)
 					{
@@ -179,7 +181,8 @@ public class MainActivity extends Activity  implements Runnable{
 					}
 					if(displaytext.length()>0)
 						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
-
+*/
+					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
 
 					
 					
