@@ -202,7 +202,6 @@ public class MainActivity extends Activity  implements Runnable{
 					displayDir.setText(directions.get(0).toString());
 					Log.d("displaytext", displaytext);
 
-					displaytext = displaytext.substring(0,15);
 					int turn =3;
 					if(displaytext.contains("left"))
 						turn = 1;

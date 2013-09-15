@@ -23,13 +23,13 @@ static struct NavData {
   uint8_t sync_buffer[96];
 } NavData;
 
-static uint32_t TURN_ICONS[] = {
+static uint8_t TURN_ICONS[] = {
   RESOURCE_ID_RIGHT,
   RESOURCE_ID_LEFT,
   RESOURCE_ID_STRAIGHT
 };
 
-char debugLog[10];
+char debugLog[40];
 
 enum {
   TURN_DATA_KEY = 0,
@@ -62,7 +62,8 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
 
   switch (key) {
   case TURN_DATA_KEY:
-    text_layer_set_text(&NavData.turnTextLayer, new_tuple->value->cstring);
+    snprintf(debugLog, 40, "%s", new_tuple->value->cstring);
+    text_layer_set_text(&NavData.turnTextLayer, debugLog);
     break;
   case STREET_DATA_KEY:
     //    text_layer_set_text(&NavData.streetTextLayer, new_tuple->value->cstring);
@@ -72,7 +73,7 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
     bitmap_layer_set_bitmap(&NavData.turn_layer, &NavData.turn_bitmap.bmp);
     break;
   case VIBE_KEY:
-    snprintf(debugLog, 10, "%lu", new_tuple->value->uint32);
+    snprintf(debugLog, 40, "%lu", new_tuple->value->uint32);
     //   text_layer_set_text(&NavData.streetTextLayer, debugLog);
     if (new_tuple->value->uint32 == 1)
       {
