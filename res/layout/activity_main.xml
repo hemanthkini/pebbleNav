@@ -23,9 +23,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title"
+            android:textStyle="bold"
+            android:textSize="35dp"
+            android:layout_marginBottom="20dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
+            android:textStyle="italic"
+            android:textSize="15dp"
+            android:text = "Where do you want to go?"
             android:id="@+id/enterAddress"
             android:layout_width="266dp"
             android:layout_height="wrap_content"
@@ -33,41 +39,47 @@
 
         <Button
             android:id="@+id/go"
-            style="@style/blackbtn"
-            android:layout_width="57dp"
-            android:layout_height="wrap_content"
+            style="@style/orangebtn"
+            android:layout_width="104dp"
+            android:layout_height="match_parent"
             android:layout_below="@+id/enterAddress"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:onClick="getLocData"
             android:text="@string/go" />
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/printedDirToScreen"
         android:layout_width="wrap_content"
+                    android:textColor="#000000"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Large Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/printedDistToScreen"
         android:layout_width="wrap_content"
+		android:textColor="#000000"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/printedDirToScreen"
         android:layout_below="@+id/printedDirToScreen"
-        android:text="Large Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/distOffPath"
+		android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/printedDistToScreen"
         android:layout_below="@+id/printedDistToScreen"
-        android:text="Large Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

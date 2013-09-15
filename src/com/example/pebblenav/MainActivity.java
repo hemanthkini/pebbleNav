@@ -32,10 +32,9 @@ public class MainActivity extends Activity  implements Runnable{
 		super.onCreate(savedInstanceState);
 		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
 		
-
 		setup();
-
 	}
+
 
 	public void setup(){
 
@@ -57,7 +56,15 @@ public class MainActivity extends Activity  implements Runnable{
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 		TextView title = (TextView)findViewById(R.id.title);
+		EditText edit = (EditText)findViewById(R.id.enterAddress);
+		edit.setTypeface(tf);
 		title.setTypeface(tf);
+		((EditText)(findViewById(R.id.enterAddress))).setOnClickListener(new View.OnClickListener() {
+		  public void onClick(View v) {
+		          ((EditText)v).setText(" ");
+		  }
+	});
+		
 
 	}
 
@@ -223,5 +230,6 @@ public class MainActivity extends Activity  implements Runnable{
 			recieveNewCoord(tracker.getLatitude(),tracker.getLongitude());
 		}
 	}
-
+	
+	
 }
