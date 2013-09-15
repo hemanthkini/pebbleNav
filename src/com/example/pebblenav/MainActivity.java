@@ -33,7 +33,7 @@ public class MainActivity extends Activity  implements Runnable{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
-		
+
 
 		setup();
 
@@ -42,9 +42,9 @@ public class MainActivity extends Activity  implements Runnable{
 	public void setup(){
 
 
-		
+
 		//Log.d("dist",distance(40.446833,-79.955964,40.447176,-79.957423,'K')*1000+"");
-		
+
 		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
 		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
 
@@ -73,7 +73,6 @@ public class MainActivity extends Activity  implements Runnable{
 				public void run(){
 					final TextView distPrinted = (TextView)findViewById(R.id.printedDistToScreen);
 					distPrinted.setText("Distance to next: "+dist+"");
-
 				}
 
 			});
@@ -140,16 +139,16 @@ public class MainActivity extends Activity  implements Runnable{
 			runOnUiThread(new Runnable(){
 
 				public void run(){
-					
+
 					Direction theDir = directions.get(0);
 					vec2 A = new vec2(theDir.startlat,theDir.startlong);
 					vec2 B = new vec2(theDir.endlat,theDir.endlong);
 					vec2 C = new vec2(tracker.getLatitude(), tracker.getLongitude());
-					
+
 					double minDist = DistanceUtils.minimum_distance(A,B,C);
-					
+
 					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
-					
+
 					TextView displayDir = (TextView)findViewById(R.id.printedDirToScreen);
 					String displaytext;
 					if(!directions.get(0).maneuver.equals(""))
@@ -164,14 +163,30 @@ public class MainActivity extends Activity  implements Runnable{
 					Log.d("displaytext", displaytext);
 
 					displaytext = displaytext.substring(0,15);
+
 					int turn =3;
 					if(displaytext.contains("left"))
 						turn = 1;
 					else if(displaytext.contains("right"))
 						turn = 2;
-					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
+					
+					final int linelength = 15;
+					
+					while(displaytext.length()>linelength-1)
+					{
+						String textpiece = displaytext.substring(0,linelength-1);
+						displaytext = displaytext.substring(linelength-1);
+						
+						PebbleInterface.sendTurnToPebble(getApplicationContext(), textpiece+(textpiece.charAt(linelength-1)==' '?"-":" "), turn);
+					}
+					if(displaytext.length()>0)
+						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
+
 
 					
+					
+
+
 				}
 
 			});
