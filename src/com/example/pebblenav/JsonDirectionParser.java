@@ -36,7 +36,7 @@ public class JsonDirectionParser {
 				{
 					JSONObject s = steps.getJSONObject(i);
 
-					Direction D = new Direction(steps.getJSONObject(i));
+					Direction D = new Direction(s);
 					parsedDirections.add(D);
 				}
 			}

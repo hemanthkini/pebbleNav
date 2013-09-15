@@ -8,16 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    
-    
-
-
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:gravity="center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <TextView
@@ -26,22 +23,41 @@
             android:layout_height="wrap_content"
             android:text="@string/title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-              
-          <EditText
-              android:id="@+id/enterAddress"
-              android:layout_width="266dp"
-              android:layout_height="wrap_content"
-              android:inputType="textPostalAddress" />
 
-	    <Button
-	        android:id="@+id/go"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/enterAddress"
-	        android:layout_centerHorizontal="true"
-	        android:onClick="getLocData"
-	        android:text="@string/go" />
-        
+        <EditText
+            android:id="@+id/enterAddress"
+            android:layout_width="266dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress" />
+
+        <Button
+            android:id="@+id/go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enterAddress"
+            android:layout_centerHorizontal="true"
+            android:onClick="getLocData"
+            android:text="@string/go" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/printedDirToScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/printedDistToScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/printedDirToScreen"
+        android:layout_below="@+id/printedDirToScreen"
+        android:layout_marginTop="34dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
