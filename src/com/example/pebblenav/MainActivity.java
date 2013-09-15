@@ -144,7 +144,7 @@ public class MainActivity extends Activity  implements Runnable{
 					vec2 B = new vec2(theDir.endlat,theDir.endlong);
 					vec2 C = new vec2(tracker.getLatitude(), tracker.getLongitude());
 
-					double minDist = DistanceUtils.minimum_distance(A,B,C);
+					int minDist = (int)DistanceUtils.minimum_distance(A,B,C);
 
 					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
 
@@ -175,15 +175,15 @@ public class MainActivity extends Activity  implements Runnable{
 					
 					if(displaytext.length()>14)
 					{	
-						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext.substring(0,14)+(textpiece.charAt(linelength-1)==' '?"-":" "), turn);
+						PebbleInterface.sendString1ToPebble(getApplicationContext(), displaytext.substring(0,14)+(textpiece.charAt(linelength-1)==' '?"-":" "));
 						displaytext=displaytext.substring(14);
 						if(displaytext.length()>14)
-							PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext.substring(14,29), turn);
+							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext.substring(14,29));
 						else
-							PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
+							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext);
 					}
 					else
-						PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, turn);
+						PebbleInterface.sendString1ToPebble(getApplicationContext(), displaytext);
 
 				}
 
