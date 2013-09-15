@@ -1,5 +1,13 @@
 package com.example.pebblenav;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONException;
+
 import android.os.*;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -26,6 +34,8 @@ public class MainActivity extends Activity  implements Runnable{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
+		tracker = new GPSTracker(getApplicationContext());
 		
 		setup();
 				
@@ -39,6 +49,12 @@ public class MainActivity extends Activity  implements Runnable{
 		tracker = new GPSTracker(getApplicationContext());
 		
 		setContentView(R.layout.activity_main);
+
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
+				
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 		TextView title = (TextView)findViewById(R.id.title);
 		title.setTypeface(tf);
