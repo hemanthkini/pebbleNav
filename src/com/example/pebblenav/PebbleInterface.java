@@ -11,9 +11,9 @@ public class PebbleInterface {
 	private final static int TURN_IMAGE_KEY = 2;
 	private final static int VIBES_KEY = 3;
 
-	private static String TurnDataString;
-	private static String StreetDataString;
-	private static byte TurnImageID;
+	private static String TurnDataString = "";
+	private static String StreetDataString = "";
+	private static byte TurnImageID = 0;
 	
 	public static void sendDataToPebble (Context c, String stringVal, String stringVal2, int intVal, int buzz) {
 		PebbleDictionary data = new PebbleDictionary();
