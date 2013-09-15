@@ -1,40 +1,34 @@
 package com.example.pebblenav;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONException;
 
-import android.os.*;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
-import android.view.*;
-import android.widget.*;
-import android.location.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.util.concurrent.*;
-
-import org.json.*;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity  implements Runnable{
 	public static GPSTracker tracker;
 	public static double longitude;
 	public static double latitude;
-	public static final int refreshRate = 2;
+	public static final int refreshRate = 5;
 	public ArrayList<Direction> directions;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
+		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
 		tracker = new GPSTracker(getApplicationContext());
 		
 		setup();
@@ -50,10 +44,10 @@ public class MainActivity extends Activity  implements Runnable{
 		
 		setContentView(R.layout.activity_main);
 
-		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
-		PebbleInterface.buzzPebble(getApplicationContext());
-		PebbleInterface.buzzPebble(getApplicationContext());
-		PebbleInterface.buzzPebble(getApplicationContext());
+		//PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		//PebbleInterface.buzzPebble(getApplicationContext());
+		//PebbleInterface.buzzPebble(getApplicationContext());
+		//PebbleInterface.buzzPebble(getApplicationContext());
 				
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 		TextView title = (TextView)findViewById(R.id.title);
@@ -120,7 +114,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 	@Override
 	public void run() {
-		System.out.println(directions);
+		//System.out.println("D:"+directions);
 		if(directions!=null && directions.size()>0)
 		{
 			System.out.println("in");
