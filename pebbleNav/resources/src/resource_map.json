@@ -1,11 +1,24 @@
 
-{"friendlyVersion": "VERSION",
- "versionDefName": "VERSION",
- "media": [
-	   {
-	    "type":"raw",
-	    "defName":"DUMMY",
-	    "file":"resource_map.json"
-	   }
-	  ]
+{
+    "friendlyVersion": "VERSION",
+    "versionDefName": "VERSION",
+    "media": [
+	{
+            "defName": "RIGHT", 
+            "file": "img/right.png", 
+            "type": "png"
+           }, 
+        { 
+            "defName": "LEFT", 
+            "file": "img/left.png", 
+            "type": "png"
+        }, 
+        {
+            "defName": "STRAIGHT", 
+            "file": "img/straight.png", 
+            "type": "png"
+        }
+	
+    ]
+
 }
