@@ -33,12 +33,14 @@ public class MainActivity extends Activity  implements Runnable{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setup();
 
+		setup();
 	}
 
+
 	public void setup(){
-		
+
+
 		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
 		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
 
@@ -48,7 +50,15 @@ public class MainActivity extends Activity  implements Runnable{
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
 		TextView title = (TextView)findViewById(R.id.title);
+		EditText edit = (EditText)findViewById(R.id.enterAddress);
+		edit.setTypeface(tf);
 		title.setTypeface(tf);
+		((EditText)(findViewById(R.id.enterAddress))).setOnClickListener(new View.OnClickListener() {
+		  public void onClick(View v) {
+		          ((EditText)v).setText(" ");
+		  }
+	});
+		
 
 	}
 
@@ -190,5 +200,6 @@ public class MainActivity extends Activity  implements Runnable{
 			recieveNewCoord(tracker.getLatitude(),tracker.getLongitude());
 		}
 	}
-
+	
+	
 }
