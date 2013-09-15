@@ -13,6 +13,7 @@ import com.example.pebblenav.util.vec2;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,9 @@ public class MainActivity extends Activity  implements Runnable{
 	public static final int NEXTDIRECTIONLIMIT = 25;
 	public static final double OFFPATHLIMIT = 100;
 
+	public int awaycounter = 0;
+	public double prevdist = 0;
+	
 	public String jsonQuery;
 	
 	public ArrayList<Direction> directions;
@@ -70,6 +74,17 @@ public class MainActivity extends Activity  implements Runnable{
 			System.out.println("a");
 			final double dist = DistanceUtils.distance(latitude,longitude,directions.get(0).endlat,directions.get(0).endlong,'K')*1000;
 
+			
+			if(dist>prevdist)
+				awaycounter++;
+			else
+				awaycounter--;
+			
+			if(awaycounter>5)
+			{
+				new RetreiveFeedTask(this).execute(jsonQuery);
+				System.out.println("redoing");
+			}
 			runOnUiThread(new Runnable(){
 
 				public void run(){
@@ -138,28 +153,10 @@ public class MainActivity extends Activity  implements Runnable{
 
 		if(directions!=null && directions.size()>0)
 		{
-			final MainActivity main = this;
 			runOnUiThread(new Runnable(){
 
 				public void run(){
 
-					Direction theDir = directions.get(0);
-					vec2 A = new vec2(theDir.startlat,theDir.startlong);
-					vec2 B = new vec2(theDir.endlat,theDir.endlong);
-					vec2 C = new vec2(tracker.getLatitude(), tracker.getLongitude());
-
-					int minDist = (int)DistanceUtils.minimum_distance(A,B,C);
-
-					if(minDist>OFFPATHLIMIT)
-					{
-						new RetreiveFeedTask(main).execute(jsonQuery);
-						//Recalculating
-					}
-					
-					
-					
-					
-					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
 
 					TextView displayDir = (TextView)findViewById(R.id.printedDirToScreen);
 					String displaytext;
@@ -202,8 +199,9 @@ public class MainActivity extends Activity  implements Runnable{
 
 
 			System.out.println("in");
-			tracker.getLocation();
-			recieveNewCoord(tracker.getLatitude(),tracker.getLongitude());
+			Location L = tracker.getLocation();
+			System.out.println(L);
+			recieveNewCoord(L.getLatitude(),L.getLongitude());
 		}
 	}
 	
