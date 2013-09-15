@@ -1,4 +1,4 @@
-package com.example.pebblenav;
+package com.example.pebblenav.util;
 
 public class vec2 {
 	public double x;

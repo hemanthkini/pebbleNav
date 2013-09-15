@@ -16,7 +16,7 @@ static struct NavData {
   TextLayer turnTextLayer;
 
   BitmapLayer turn_layer;
-  uint8_t current_turn;
+  uint32_t current_turn;
   HeapBitmap turn_bitmap;
   
   AppSync sync;
@@ -29,7 +29,7 @@ static uint32_t TURN_ICONS[] = {
   RESOURCE_ID_STRAIGHT
 };
 
-char debugLog[10];
+char debugLog[40];
 
 enum {
   TURN_DATA_KEY = 0,
@@ -65,15 +65,13 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
     text_layer_set_text(&NavData.turnTextLayer, new_tuple->value->cstring);
     break;
   case STREET_DATA_KEY:
-    //    text_layer_set_text(&NavData.streetTextLayer, new_tuple->value->cstring);
+    text_layer_set_text(&NavData.streetTextLayer, new_tuple->value->cstring);
     break;
   case TURN_IMAGE_KEY:
     load_bitmap(TURN_ICONS[new_tuple->value->uint8]);
     bitmap_layer_set_bitmap(&NavData.turn_layer, &NavData.turn_bitmap.bmp);
     break;
   case VIBE_KEY:
-    snprintf(debugLog, 10, "%lu", new_tuple->value->uint32);
-    //   text_layer_set_text(&NavData.streetTextLayer, debugLog);
     if (new_tuple->value->uint32 == 1)
       {
 	vibes_short_pulse();
@@ -98,17 +96,16 @@ void handle_init(AppContextRef ctx) {
   bitmap_layer_init(&NavData.turn_layer, turn_rect);
   layer_add_child(&NavData.window.layer, &NavData.turn_layer.layer);
 
-  text_layer_init(&NavData.turnTextLayer, GRect(0, 90, 144, 54));
-  text_layer_set_font(&NavData.turnTextLayer, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_init(&NavData.turnTextLayer, GRect(0, 90, 144, 27));
+  text_layer_set_font(&NavData.turnTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
   text_layer_set_text(&NavData.turnTextLayer, "nav input...");
 
-  /*  text_layer_init(&NavData.streetTextLayer, GRect(0, 117, 144, 27));
+  text_layer_init(&NavData.streetTextLayer, GRect(0, 117, 144, 27));
   text_layer_set_font(&NavData.streetTextLayer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
-  text_layer_set_text(&NavData.streetTextLayer, "street input..."); */
-  text_layer_set_overflow_mode(&NavData.turnTextLayer, GTextOverflowModeWordWrap);
-
+  text_layer_set_text(&NavData.streetTextLayer, "street input...");
+  
   window_init(&NavData.window, "pebbleNav");
-  // layer_add_child(&NavData.window.layer, &NavData.streetTextLayer.layer);
+   layer_add_child(&NavData.window.layer, &NavData.streetTextLayer.layer);
   layer_add_child(&NavData.window.layer, &NavData.turnTextLayer.layer);
 
   Tuplet initial_values[] = {                                                                                                               
