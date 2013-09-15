@@ -55,7 +55,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 	}
 
-	public void recieveNewCoord(double longitude, double latitude){
+	public void recieveNewCoord(double latitude, double longitude){
 		try{
 			System.out.println("a");
 			final double dist = coordToFt(latitude,longitude,directions.get(0).endlat,directions.get(0).endlong);
@@ -164,7 +164,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 			System.out.println("in");
 			tracker.getLocation();
-			recieveNewCoord(tracker.getLongitude(),tracker.getLatitude());
+			recieveNewCoord(tracker.getLatitude(),tracker.getLongitude());
 		}
 	}
 
