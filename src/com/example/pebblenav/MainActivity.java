@@ -164,20 +164,13 @@ public class MainActivity extends Activity  implements Runnable{
 						turn = 2;
 					
 					PebbleInterface.sendTurnImageToPebble(getApplicationContext(),turn);
-					
-					if(displaytext.length()>40)
-						displaytext=displaytext.substring(0,40);
-					final int linelength = 15;
-					
-						String textpiece = displaytext.substring(0,linelength-1);
-						displaytext = displaytext.substring(linelength-1);
-					
+										
 					if(displaytext.length()>14)
 					{	
-						PebbleInterface.sendString1ToPebble(getApplicationContext(), displaytext.substring(0,14)+(textpiece.charAt(linelength-1)==' '?"-":" "));
+						PebbleInterface.sendString1ToPebble(getApplicationContext(), displaytext.substring(0,14)+(displaytext.charAt(14)==' '?"-":" "));
 						displaytext=displaytext.substring(14);
 						if(displaytext.length()>14)
-							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext.substring(14,29));
+							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext.substring(14,28));
 						else
 							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext);
 					}
