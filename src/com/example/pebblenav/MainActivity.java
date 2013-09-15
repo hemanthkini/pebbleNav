@@ -1,42 +1,75 @@
 package com.example.pebblenav;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.os.StrictMode;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONException;
+
+import android.os.*;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Typeface;
 import android.view.*;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.*;
 import android.location.*;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.*;
+import org.json.*;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-public class MainActivity extends Activity {
-	GPSTracker tracker;
+public class MainActivity extends Activity implements Runnable{
+	public static GPSTracker tracker;
+	public static double longitude;
+	public static double latitude;
+	public static final int refreshRate = 10;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
+		tracker = new GPSTracker(getApplicationContext());
 		
+		setup();
+				
+	}
+	
+	public void setup(){
+		
+		ScheduledThreadPoolExecutor sched = new ScheduledThreadPoolExecutor(2);
+		sched.scheduleAtFixedRate(this, 0, refreshRate , TimeUnit.SECONDS);
 
 		tracker = new GPSTracker(getApplicationContext());
+		
 		setContentView(R.layout.activity_main);
-	
+
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
 				
+		Typeface tf = Typeface.createFromAsset(getAssets(), "font.ttf");
+		TextView title = (TextView)findViewById(R.id.title);
+		title.setTypeface(tf);
+		
+	}
+	
+	public void recieveNewCoord(double longitude, double latitude){
+		
+		
+		
 	}
 	
 	public void getLocData(View v) throws IOException, JSONException{
 		
 		
-		double longitude = tracker.getLongitude();
-		double latitude = tracker.getLatitude();
+		longitude = tracker.getLongitude();
+		latitude = tracker.getLatitude();
 		
 		System.out.println("longitude: "+longitude+"\n"+"latitude: "+latitude);
 		
@@ -54,7 +87,7 @@ public class MainActivity extends Activity {
 		
 		//JsonDirectionParser parser = new JsonDirectionParser();
 		
-			
+		
 		System.out.println("blob >"+jsonString);
 		
 		 
@@ -65,7 +98,10 @@ public class MainActivity extends Activity {
 		
 		double a2 = Math.pow(x1-x2, 2);
 		double b2 = Math.pow(y1-y2, 2);
-		return (int)Math.sqrt(a2+b2);
+		int c = (int)Math.sqrt(a2+b2);
+		
+		//364320 is number of feet in a unit of longitude/latitude
+		return 364320 * c;
 	}
 
 	@Override
@@ -73,6 +109,13 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void run() {
+		
+		recieveNewCoord(tracker.getLongitude(),tracker.getLatitude());
+		
 	}
 
 }

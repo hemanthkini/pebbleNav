@@ -3,7 +3,7 @@ package com.example.pebblenav;
 
 import java.util.UUID;
 
-/**
+/** 		
  * Constant values used by Pebble-enabled kit applications.
  *
  * @author zulak@getpebble.com

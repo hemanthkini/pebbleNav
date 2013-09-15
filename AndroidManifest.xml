@@ -14,11 +14,12 @@
         android:targetSdkVersion="17" />
 
     <application
+        
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:apiKey="AIzaSyCA7DmikdtewtB-ofJlVPCf3X41L2M7kDw"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar" >
         <activity
             android:name="com.example.pebblenav.MainActivity"
             android:label="@string/app_name" >

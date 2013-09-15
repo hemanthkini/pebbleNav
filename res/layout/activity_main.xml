@@ -8,21 +8,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-
     
-    <EditText
-    android:id="@+id/enterAddress"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPostalAddress" />
+    
 
-    <Button
-        android:id="@+id/go"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/enterAddress"
+         android:gravity="center"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="getLocData"
-        android:text="@string/go" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+              
+          <EditText
+              android:id="@+id/enterAddress"
+              android:layout_width="266dp"
+              android:layout_height="wrap_content"
+              android:inputType="textPostalAddress" />
+
+	    <Button
+	        android:id="@+id/go"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/enterAddress"
+	        android:layout_centerHorizontal="true"
+	        android:onClick="getLocData"
+	        android:text="@string/go" />
+        
+    </LinearLayout>
 
 </RelativeLayout>

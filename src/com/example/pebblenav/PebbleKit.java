@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 
 import com.example.pebblenav.Constants;
@@ -192,7 +193,7 @@ public final class PebbleKit {
      */
     public static void sendDataToPebble(final Context context, final UUID watchappUuid, final PebbleDictionary data)
             throws IllegalArgumentException {
-
+    	Log.d("pebbleLogger", "sentdatatopebble");
         sendDataToPebbleWithTransactionId(context, watchappUuid, data, -1);
     }
 
