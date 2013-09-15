@@ -1,16 +1,14 @@
 package com.example.pebblenav;
 
-import android.os.*;
-import android.provider.Settings;
-import android.app.*;
-import android.content.*;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
-import android.view.Menu;
-import android.widget.EditText;
-import android.location.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
 
 public class GPSTracker extends Service implements LocationListener {
 
