@@ -13,7 +13,7 @@ public class PebbleInterface {
 
 	private static String TurnDataString;
 	private static String StreetDataString;
-	private static int TurnImageID;
+	private static byte TurnImageID;
 	
 	public static void sendDataToPebble (Context c, String stringVal, String stringVal2, int intVal, int buzz) {
 		PebbleDictionary data = new PebbleDictionary();
@@ -21,8 +21,8 @@ public class PebbleInterface {
 		TurnDataString = stringVal2;
 		data.addString(STREET_DATA_KEY, stringVal);
 		StreetDataString = stringVal;
-		data.addInt32(TURN_IMAGE_KEY, intVal);
-		TurnImageID = intVal;
+		data.addInt8(TURN_IMAGE_KEY, (byte) intVal);
+		TurnImageID = (byte) intVal;
 		data.addInt32(VIBES_KEY, buzz);
 		PebbleKit.sendDataToPebble(c, Constants.selfUUID, data);
 	}

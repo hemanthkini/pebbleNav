@@ -13,6 +13,9 @@ public final class Constants {
 	
 	static UUID selfUUID = UUID.fromString(selfUUIDString);
 	
+	public final static int LEFT_TURN_IMG_KEY = 1;
+	public final static int RIGHT_TURN_IMG_KEY = 2;
+	public final static int STRAIGHT_IMG_KEY = 3;
 	
     /**
      * Intent broadcast by pebble.apk when a new connection to a Pebble is established.
