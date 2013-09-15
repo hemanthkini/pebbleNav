@@ -27,12 +27,16 @@ public class PebbleInterface {
 		PebbleKit.sendDataToPebble(c, Constants.selfUUID, data);
 	}
 	
-	public static void sendTurnToPebble(Context c, String stringVal, int intVal) {
-		sendDataToPebble(c, StreetDataString, stringVal, intVal, 0);		
+	public static void sendString1ToPebble(Context c, String stringVal) {
+		sendDataToPebble(c, StreetDataString, stringVal, TurnImageID, 0);		
 	}
 	
-	public static void sendStreetToPebble(Context c, String stringVal) {
+	public static void sendString2ToPebble(Context c, String stringVal) {
 		sendDataToPebble(c, stringVal, TurnDataString, TurnImageID, 0);
+	}
+	
+	public static void sendTurnImageToPebble(Context c, int x) {
+		sendDataToPebble(c, StreetDataString, TurnDataString, x, 0);
 	}
 	
 	public static void buzzPebble (Context c)
