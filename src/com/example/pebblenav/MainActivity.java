@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.json.JSONException;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -22,8 +24,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		PebbleInterface pebble = new PebbleInterface();
-		pebble.sendDataToPebble(getApplicationContext(), "sup nigga");
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup nigga", "hey", 0, 1);
 		tracker = new GPSTracker(getApplicationContext());
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -31,7 +32,11 @@ public class MainActivity extends Activity {
 				
 		tracker = new GPSTracker(getApplicationContext());
 		setContentView(R.layout.activity_main);
-	
+
+		PebbleInterface.sendDataToPebble(getApplicationContext(), "sup a", "yo bitches", 0, 3);
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
+		PebbleInterface.buzzPebble(getApplicationContext());
 				
 	}
 	
