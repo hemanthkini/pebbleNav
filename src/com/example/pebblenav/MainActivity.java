@@ -174,7 +174,7 @@ public class MainActivity extends Activity  implements Runnable{
 						PebbleInterface.sendString1ToPebble(getApplicationContext(), displaytext.substring(0,14)+(displaytext.charAt(14)==' '?"-":" "));
 						displaytext=displaytext.substring(14);
 						if(displaytext.length()>14)
-							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext.substring(14,28));
+							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext.substring(0,14));
 						else
 							PebbleInterface.sendString2ToPebble(getApplicationContext(), displaytext);
 					}
