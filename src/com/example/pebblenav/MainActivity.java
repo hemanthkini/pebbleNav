@@ -27,7 +27,10 @@ public class MainActivity extends Activity  implements Runnable{
 	public static double latitude;
 	public static final int refreshRate = 5;
 	public static final int NEXTDIRECTIONLIMIT = 25;
+	public static final double OFFPATHLIMIT = 100;
 
+	public String jsonQuery;
+	
 	public ArrayList<Direction> directions;
 
 	@Override
@@ -106,7 +109,7 @@ public class MainActivity extends Activity  implements Runnable{
 		EditText textField = (EditText)findViewById(R.id.enterAddress);
 		String destAddress = textField.getText().toString().replaceAll(" ", "%20");
 
-		String jsonQuery="https://maps.googleapis.com/maps/api/directions/json?mode=walking&sensor=true";
+		jsonQuery="https://maps.googleapis.com/maps/api/directions/json?mode=walking&sensor=true";
 		jsonQuery += "&origin=" + latitude + "," + longitude;
 		jsonQuery += "&destination=" + destAddress;
 
@@ -135,6 +138,7 @@ public class MainActivity extends Activity  implements Runnable{
 
 		if(directions!=null && directions.size()>0)
 		{
+			final MainActivity main = this;
 			runOnUiThread(new Runnable(){
 
 				public void run(){
@@ -146,6 +150,15 @@ public class MainActivity extends Activity  implements Runnable{
 
 					int minDist = (int)DistanceUtils.minimum_distance(A,B,C);
 
+					if(minDist>OFFPATHLIMIT)
+					{
+						new RetreiveFeedTask(main).execute(jsonQuery);
+						//Recalculating
+					}
+					
+					
+					
+					
 					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
 
 					TextView displayDir = (TextView)findViewById(R.id.printedDirToScreen);

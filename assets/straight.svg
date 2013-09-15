@@ -14,7 +14,10 @@
    id="svg3163"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 7">
+   sodipodi:docname="straight.svg"
+   inkscape:export-filename="/home/tim/hackcmu/assets/straight.png"
+   inkscape:export-xdpi="20.571428"
+   inkscape:export-ydpi="20.571428">
   <defs
      id="defs3165">
     <marker
@@ -81,14 +84,20 @@
      id="layer1"
      transform="translate(0,-702.36218)">
     <path
-       style="fill:none;stroke:#000000;stroke-width:13.39999962;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#TriangleOutL)"
+       style="fill:none;stroke:#000000;stroke-width:13.39999961999999911;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:url(#TriangleOutL)"
        d="m 173.15714,1041.3765 0,-251.42862"
        id="path3171"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/tim/hackcmu/assets/straight.png" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:49.59999847;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:none"
+       style="fill:none;stroke:#000000;stroke-width:49.59999847000000273;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;marker-end:none"
        d="m 173.15714,1041.3765 0,-251.42865"
        id="path3171-9"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="/home/tim/hackcmu/assets/straight.png" />
   </g>
 </svg>
