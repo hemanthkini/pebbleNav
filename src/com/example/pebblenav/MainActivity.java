@@ -192,6 +192,16 @@ public class MainActivity extends Activity  implements Runnable{
 			runOnUiThread(new Runnable(){
 
 				public void run(){
+					
+					Direction theDir = directions.get(0);
+					vec2 A = new vec2(theDir.startlat,theDir.startlong);
+					vec2 B = new vec2(theDir.endlat,theDir.endlong);
+					vec2 C = new vec2(tracker.getLatitude(), tracker.getLongitude());
+					
+					double minDist = minimum_distance(A,B,C);
+					
+					((TextView)(findViewById(R.id.distOffPath))).setText(minDist+" off path");
+					
 					TextView displayDir = (TextView)findViewById(R.id.printedDirToScreen);
 					String displaytext;
 					if(!directions.get(0).maneuver.equals(""))
@@ -204,7 +214,7 @@ public class MainActivity extends Activity  implements Runnable{
 					}
 					displayDir.setText(directions.get(0).toString());
 					Log.d("displaytext", displaytext);
-					displaytext = displaytext.substring(0,15);
+				//	displaytext = displaytext.substring(0,15);
 					PebbleInterface.sendTurnToPebble(getApplicationContext(), displaytext, 0);
 					
 				}

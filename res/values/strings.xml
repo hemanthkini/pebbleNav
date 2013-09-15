@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="go">Go</string>
     <string name="title">PebbleNav</string>
+    <string name="empty"></string>
 
 </resources>

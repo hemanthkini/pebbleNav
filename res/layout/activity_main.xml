@@ -48,18 +48,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp"
-        android:text="Large Text"
+        android:layout_marginTop="20dp"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/printedDistToScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/printedDirToScreen"
+        android:layout_alignLeft="@+id/printedDirToScreen"
         android:layout_below="@+id/printedDirToScreen"
-        android:layout_marginTop="34dp"
-        android:text="Large Text"
+        android:text="@string/empty"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/distOffPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/printedDistToScreen"
+        android:layout_below="@+id/printedDistToScreen"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
