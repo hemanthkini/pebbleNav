@@ -1,4 +1,4 @@
-package com.example.pebblenav;
+package com.example.pebblenav.util;
 
 
 import java.util.UUID;
